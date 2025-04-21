@@ -1,4 +1,4 @@
-<h1>Virus infection promotes C3 grass productivity and is not diluted by plant community diversity</h1>
+<h1>Increased virus prevalence promotes C3 grass productivity and is not diluted by plant community diversity</h1>
 
 Repository for study examining the effects of plant diversity on plant viral prevalence in grass hosts. 
 
