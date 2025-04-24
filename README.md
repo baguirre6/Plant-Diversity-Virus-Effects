@@ -1,6 +1,10 @@
 <h1>Increased virus prevalence promotes C3 grass productivity and is not diluted by plant community diversity</h1>
 
-Authors: Beatriz A. Aguirre, Erika Mudrak, Alexandra J. Wright and Alison G. Power
+Authors: 
+  -Beatriz A. Aguirre, Department of Ecology and Evolution, Cornell University
+  -Erika Mudrak, Cornell Statistical Consulting Unit, Cornell University
+  -Alexandra J. Wright,Department of Evolution and Behavior, University of Minnesota
+  -Alison G. Power, Department of Ecology and Evolution, Cornell University
 
 <h2>Associated Paper Abstract</h2>
 
@@ -15,7 +19,7 @@ Authors: Beatriz A. Aguirre, Erika Mudrak, Alexandra J. Wright and Alison G. Pow
 <h2>Repository Purpose</h2>
 This repository contains the data and code necessary for study described above. 
 
-<h2>Script Explanations</h2>
+<h2>Repository Structure and Script Explanations</h2>
 
 <h2>Funding Acknowledgements</h2>
 This work was funded the the Cornell Atkinson Center for Sustainability's Sustainable Biodiversity Grant, the Cornell SUNY Graduate Diversity Fellowship and the NSF GRFP (No. DGE – 2139899) awarded to Beatriz A. Aguirre. 
