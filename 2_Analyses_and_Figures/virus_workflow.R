@@ -87,13 +87,13 @@ Figure1_bydv.species <-ggplot(species.info0,
                        aes(x=Species, y=prob)) +
   geom_point(aes(color=GrassType), size=5) +
   geom_errorbar(aes(ymin=prob-SE, ymax=prob+SE), width=.05, position=position_dodge(0.01)) +
-  ylab("BYDV-PAV Prevalence") +
+  ylab("BYDV-PAV Infection\n Probability") +
   xlab("Grass Species") +
   ylim(c(0,.5)) +
   theme_bw() +
-  theme(axis.title   = element_text(face = "bold", size=15),
-        axis.text.y    = element_text(face = "bold", size=13),
-        axis.text.x = element_text(face = "bold.italic", size=13, angle = 45, hjust = 1),
+  theme(axis.title   = element_text(size=16),
+        axis.text.y    = element_text(size=13),
+        axis.text.x = element_text(face = "italic", size=13, angle = 45, hjust = 1),
         legend.position = "top") +
   annotate("text", x="Avena fatua", y=.36, label= 'c',
            col="black", size=6, parse=TRUE) +
@@ -147,12 +147,12 @@ panel.1<-ggplot(result.annual.bydv,
                 aes(x=Year, y=prob, group=Year)) +
   geom_point(aes(shape=Year, color=Year), size=5) +
   geom_errorbar(aes(ymin=prob-SE, ymax=prob+SE, color=Year), width=.05, position=position_dodge(0.8)) +
-  ylab("BYDV-PAV\n Prevalence") +
+  ylab("BYDV-PAV Infection\n Probability") +
   xlab("Year") +
   ylim(c(0,.5)) +
   theme_bw() +
-  theme(axis.title   = element_text(face = "bold", size=15),
-        axis.text    = element_text(face = "bold", size=13),
+  theme(axis.title   = element_text(size=16),
+        axis.text    = element_text(size=13),
         legend.position = "none",
         plot.caption = element_text(hjust = 0, size=10)) +
   geom_signif(comparisons = list(c("2021", "2022")), annotations = "*", map_signif_level=TRUE,
@@ -179,8 +179,8 @@ panel.2<-ggplot(panel_gt,
   xlab("Grass Type") +
   ylim(c(0,.5)) +
   theme_bw() +
-  theme(axis.title   = element_text(face = "bold", size=15),
-        axis.text    = element_text(face = "bold", size=13),
+  theme(axis.title   = element_text(size=16),
+        axis.text    = element_text(size=13),
         plot.caption = element_text(hjust = 0, size=10),
         axis.title.y = element_blank(),
         legend.position = c(.85,.82)) +
@@ -203,12 +203,12 @@ panel.3<-ggplot(marginal.2,
                 aes(x=as.factor(fg_richness), y=prob, group=Year)) +
   geom_point(aes(shape=Year, color=Year), size=5) +
   geom_errorbar(aes(ymin=prob-SE, ymax=prob+SE, color=Year), width=.05, position=position_dodge(0)) +
-  ylab("BYDV-PAV\n Prevalence") +
+  ylab("BYDV-PAV Infection\n Probability") +
   xlab("Functional Group Richness") +
   ylim(c(0,.5)) +
   theme_bw() +
-  theme(axis.title   = element_text(face = "bold", size=15),
-        axis.text    = element_text(face = "bold", size=13),
+  theme(axis.title   = element_text(size=16),
+        axis.text    = element_text(size=13),
         legend.position = "none") +
   annotate("text", x=.60, y=.50, label= '"(c)"',
            col="black", size=6, parse=TRUE)  +
@@ -233,8 +233,8 @@ panel.4 <-ggplot(panel_fd,
   xlab("Functional Group Composition") +
   ylim(c(0,.5)) +
   theme_bw() +
-  theme(axis.title   = element_text(face = "bold", size=15),
-        axis.text    = element_text(face = "bold", size=13),
+  theme(axis.title   = element_text(size=16),
+        axis.text    = element_text(size=13),
         plot.caption = element_text(hjust = 0, size=10),
         axis.title.y = element_blank(),
         legend.position = "none") +
@@ -251,7 +251,8 @@ panel.4
 # Join panels to make final BYDV Figure -- Figure 2
 
 BYDV_figure2 <- ggarrange(panel.1, panel.2, panel.3, panel.4,
-                                     ncol = 2, nrow = 2)
+                          ncol = 2, nrow = 2,
+                          common.legend = TRUE, legend = "top")
 BYDV_figure2
 
 #####################################################################
