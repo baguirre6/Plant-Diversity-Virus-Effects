@@ -1,5 +1,4 @@
 #Virus Analyses and Figures
-
 #Author: Beatriz A. Aguirre
 
 ######################################
@@ -15,6 +14,7 @@ library(ggsignif)
 library(glmmTMB)
 library(ggpubr)
 library(forcats)
+library(glmmTMB)
 
 ##########################################################################################
 #Import BYDV infection data 
@@ -39,9 +39,9 @@ virus.data %>%
 
 virus.data$fg_richness <- as.factor(virus.data$fg_richness)
 
-###################################################
-#Virus by Species Analyses - Included in Results
-###################################################
+#############################################################################
+#Virus infection probability by Species Analyses - Included in Results
+#############################################################################
 #### Virus Model By Species & Functional Diversity
 sp.virus.model = glmmTMB(PAV_Infection ~ FunctionalDiversity * Species + Year #removed grass type variable because it's redundant with species
                          + (1|Year:Block) + (1|Year:Block:Plot),
@@ -55,7 +55,7 @@ emm <-emmeans(sp.virus.model, pairwise~Species, type="response")
 multcomp::cld(emm, Letters = LETTERS) #compact letter display for figure 1
 
 #######################
-# BYDV X Species -- FIGURE 1
+# BYDV infection probability X Species -- FIGURE 1
 species.info0=as.data.frame(summary(emmeans(sp.virus.model, ~Species, type="response")))
 species.info0
 
@@ -112,19 +112,17 @@ Figure1_bydv.species +scale_color_manual(guide = guide_legend(title = "Grass Typ
 
 
 ###################################################
-#Virus Analyses - Table 2
+#Virus infection probability Analyses - Table 2
 ###################################################
-library(glmmTMB)
-
 virus.model = glmmTMB(PAV_Infection ~GrassType * FunctionalDiversity + Year
                                 + (1|Year:Block) + (1|Year:Block:Plot) + (1|Species),
                                 family='binomial', data=virus.data)
 summary(virus.model)
 car::Anova(virus.model, type=3)
 
-###################################################
-#FG Richness X Virus Analyses - Table S2
-###################################################
+#############################################################################
+#Virus infection probability X FG Richness Analyses - Table S2
+#############################################################################
 
 virus.richness.model = glmmTMB(PAV_Infection ~GrassType * fg_richness + Year 
                                   + (1|Year:Block) + (1|Year:Block:Plot) + (1|Species),
@@ -137,7 +135,7 @@ car::Anova(virus.richness.model, type=3)
 #Virus Figure 2
 ######################################
 
-#Visualize BYDV x year:
+#Visualize BYDV infection probability x year:
 yearly.bydv =emmeans(virus.model, ~Year, type="response")
 yearly.bydv
 
@@ -194,7 +192,7 @@ panel.2<-ggplot(panel_gt,
 panel.2
 
 #######################
-#Visualize BYDV x functional group richness
+#Visualize BYDV infection probability x functional group richness
 
 marginal.2 =as.data.frame(summary(emmeans(virus.richness.model, ~fg_richness+Year, type="response")))
 marginal.2
@@ -221,7 +219,7 @@ panel.3
 
 #######################
 
-#Visualize BYDV x functional diversity
+#Visualize BYDV infection probability x functional diversity
 panel_fd=as.data.frame(summary(emmeans(virus.model, ~FunctionalDiversity+Year, type="response")))
 panel_fd
 
