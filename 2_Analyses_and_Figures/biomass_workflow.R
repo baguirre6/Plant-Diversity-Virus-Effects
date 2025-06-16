@@ -250,10 +250,10 @@ hist(log(adjusted.forb.data$plot.biomass))
 forb.model.4.add <- lmer(log(plot.biomass) ~  mean.plot.infection * GrassType * FuncDiversity + Year + 
                            (1|Year:Block), data= adjusted.forb.data)
 
-anova(forb.model.4.add)
+anova(forb.model.4.add) # TABLE 3
 emmeans(forb.model.4.add, ~ Year, type="response")
 
-r.squaredGLMM(forb.model.4.add)
+r.squaredGLMM(forb.model.4.add) # TABLE 3
 
 #Run model diagnostics:
 #Plot residuals vs. fitted values to check for heteroskedasticity
@@ -289,7 +289,7 @@ legume.model.sq.trans <- lmer(sq.plot.biomass ~  mean.plot.infection * GrassType
                        (1|Year:Block), data= adjusted.legume.data)
 
 summary(legume.model.sq.trans)
-anova(legume.model.sq.trans, type=3)
+anova(legume.model.sq.trans, type=3) # TABLE 3
 
 #Run model diagnostics:
 #Plot residuals vs. fitted values to check for heteroskedasticity
@@ -300,7 +300,7 @@ plot(fitted(legume.model.sq.trans), resid(legume.model.sq.trans),
 abline(h = 0, col = "red")
 
 # legume.model.sq.trans is a good model. 
-r.squaredGLMM(legume.model.sq.trans)
+r.squaredGLMM(legume.model.sq.trans) # TABLE 3
 
 emmeans(legume.model.sq.trans, pairwise~ FuncDiversity, type="response") #significant
 
