@@ -114,8 +114,13 @@ Figure1_bydv.species +scale_color_manual(guide = guide_legend(title = "Grass Typ
 ###################################################
 #Virus infection probability Analyses - Table 2
 ###################################################
+virus.model.0 = glmmTMB(PAV_Infection ~GrassType * FunctionalDiversity + Year
+                      + (1|Year:Block) + (1|Year:Block:Plot) + (1|Species),
+                      family='binomial', data=virus.data)
+summary(virus.model.0)
+
 virus.model = glmmTMB(PAV_Infection ~GrassType * FunctionalDiversity + Year
-                                + (1|Year:Block) + (1|Year:Block:Plot) + (1|Species),
+                                + (1|Year:Block) + (1|Year:Block:Plot) + (1|Year:Block:Plot:Species) + (1|Species),
                                 family='binomial', data=virus.data)
 summary(virus.model)
 car::Anova(virus.model, type=3)
