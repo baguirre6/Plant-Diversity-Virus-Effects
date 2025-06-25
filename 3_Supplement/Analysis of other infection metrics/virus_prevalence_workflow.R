@@ -60,12 +60,18 @@ emm <-emmeans(sp.virus.prev.model, pairwise~Species, type="response")
 
 multcomp::cld(emm, Letters = LETTERS) #compact letter display for species
 
+mean.spp.BYDV$weights <- 10
+
+#double check a.fatua [row 127] -> go back and make these out of the right number of samples:
+mean.spp.BYDV$weights[127] <- 7
+
 #############################################################################
 # Virus Prevalence (proportion infected) Analyses 
 #############################################################################
 virus.prev.model = glmmTMB(mean.plot.infection ~GrassType * FunctionalDiversity + Year
-                      + (1|Year:Block) + (1|Year:Block:Plot) + (1|Species),
-                       data=mean.spp.BYDV)
+                      + (1|Year:Block) + (1|Year:Block:Plot) + (1|Year:Block:Plot:Species) + (1|Species), 
+                      weights=weights,
+                      family= 'binomial', data=mean.spp.BYDV)
 summary(virus.prev.model)
 car::Anova(virus.prev.model,type=3)
 
