@@ -47,7 +47,7 @@ sp.virus.model = glmmTMB(PAV_Infection ~ FunctionalDiversity * Species + Year #r
                          + (1|Year:Block) + (1|Year:Block:Plot),
                          family='binomial', data=virus.data)
 summary(sp.virus.model)
-car::Anova(sp.virus.model, type=3)
+car::Anova(sp.virus.model, type=3) #TABLE S2
 
 emmeans(sp.virus.model, pairwise~Species, type="response")
 emm <-emmeans(sp.virus.model, pairwise~Species, type="response")
@@ -114,27 +114,38 @@ Figure1_bydv.species +scale_color_manual(guide = guide_legend(title = "Grass Typ
 ###################################################
 #Virus infection probability Analyses - Table 2
 ###################################################
-virus.model.0 = glmmTMB(PAV_Infection ~GrassType * FunctionalDiversity + Year
-                      + (1|Year:Block) + (1|Year:Block:Plot) + (1|Species),
-                      family='binomial', data=virus.data)
-summary(virus.model.0)
+# virus.model.0 = glmmTMB(PAV_Infection ~GrassType * FunctionalDiversity + Year
+#                       + (1|Year:Block) + (1|Year:Block:Plot) + (1|Species),
+#                       family='binomial', data=virus.data)
+# summary(virus.model.0)
+# car::Anova(virus.model.0, type=3)
 
+#With observation level random effect
 virus.model = glmmTMB(PAV_Infection ~GrassType * FunctionalDiversity + Year
                                 + (1|Year:Block) + (1|Year:Block:Plot) + (1|Year:Block:Plot:Species) + (1|Species),
                                 family='binomial', data=virus.data)
 summary(virus.model)
-car::Anova(virus.model, type=3)
+car::Anova(virus.model, type=3) #TABLE 2
+
+#Post-hoc tests for functional diversity: 
+# 1-Post-hoc tests with compact letter display: 
+emm2 <-emmeans(virus.model, pairwise~FunctionalDiversity, type="response")
+multcomp::cld(emm2, Letters = LETTERS) #compact letter display for figure 2
+
+# 2-Post-hoc test for differences in infection as compared to G treatment: 
+emm_FD <- emmeans(virus.model, ~ FunctionalDiversity)
+contrast(emm_FD, method = "trt.vs.ctrl", ref = "G")
 
 #############################################################################
-#Virus infection probability X FG Richness Analyses - Table S2
+#Virus infection probability X FG Richness Analyses - Table S3
 #############################################################################
 
 virus.richness.model = glmmTMB(PAV_Infection ~GrassType * fg_richness + Year 
-                                  + (1|Year:Block) + (1|Year:Block:Plot) + (1|Species),
+                                  + (1|Year:Block) + (1|Year:Block:Plot) + (1|Year:Block:Plot:Species) +(1|Species),
                                   family='binomial', data=virus.data)
 
 summary(virus.richness.model)
-car::Anova(virus.richness.model, type=3)
+car::Anova(virus.richness.model, type=3) #TABLE S3
 
 ######################################
 #Virus Figure 2
@@ -160,7 +171,7 @@ panel.1<-ggplot(result.annual.bydv,
         plot.caption = element_text(hjust = 0, size=10)) +
   geom_signif(comparisons = list(c("2021", "2022")), annotations = "*", map_signif_level=TRUE,
               textsize=8, y_position = 0.35, tip_length = 0.05, vjust=0.4) +
-  annotate("text", x=1.5, y=0.42, label= '"P=0.006"',
+  annotate("text", x=1.5, y=0.42, label= '"P=0.009"',
            col="black", size=4, parse=TRUE) +
   annotate("text", 0.55, y=.50, label= '"(a)"',
            col="black", size=6, parse=TRUE)
@@ -245,7 +256,7 @@ panel.4 <-ggplot(panel_fd,
            col="black", size=6, parse=TRUE) +
   geom_signif(comparisons = list(c("G", "GLF")), annotations = "", map_signif_level=TRUE,
               textsize=10, y_position = 0.40, tip_length = 0.05, vjust=0.4) +
-  annotate("text", x=2.5, y=0.45, label= 'NS',
+  annotate("text", x=2.5, y=0.48, label= "'P=0.04'",
            col="black", size=4, parse=TRUE)
 
 panel.4
