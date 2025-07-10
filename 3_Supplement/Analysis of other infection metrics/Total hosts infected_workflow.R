@@ -49,43 +49,40 @@ virus.data %>%
 #Total infected with virus by Species Analyses 
 ###################################################################################
 #### Virus Model By Species & Functional Diversity
-sp.virus.prev.model = glmmTMB(tot.infected ~ FunctionalDiversity * Species + Year #removed grass type variable because it's redundant with species
+sp.virus.ct.model = glmmTMB(tot.infected ~ FunctionalDiversity * Species + Year #removed grass type variable because it's redundant with species
                               + (1|Year:Block) + (1|Year:Block:Plot),
-                              data=tot.infected.df)
-summary(sp.virus.prev.model)
-car::Anova(sp.virus.prev.model, type=3) #Same results as infection probability and virus prevalence (proportion infected)
+                              family="poisson",
+                              data=tot.infected.df) #TABLE S2 (TOTAL HOSTS INFECTED)
+summary(sp.virus.ct.model)
+car::Anova(sp.virus.ct.model, type=3) #Similar results as infection probability and virus prevalence (proportion infected)
 
-emmeans(sp.virus.prev.model, pairwise~Species, type="response")
-emm <-emmeans(sp.virus.prev.model, pairwise~Species, type="response")
-
-multcomp::cld(emm, Letters = LETTERS) #compact letter display for species
+# emmeans(sp.virus.ct.model, pairwise~Species, type="response")
+# emm <-emmeans(sp.virus.ct.model, pairwise~Species, type="response")
+# 
+# multcomp::cld(emm, Letters = LETTERS) #compact letter display for species
 
 #############################################################################
 # Total infected with virus Analyses 
 #############################################################################
-virus.prev.model = glmmTMB(tot.infected ~GrassType * FunctionalDiversity + Year
-                           + (1|Year:Block) + (1|Year:Block:Plot) + (1|Species),
+virus.ct.model = glmmTMB(tot.infected ~GrassType * FunctionalDiversity + Year
+                           + (1|Year:Block) + (1|Year:Block:Plot) + (1|Year:Block:Plot:Species) + (1|Species),
+                           family="poisson",
                            data=tot.infected.df)
-summary(virus.prev.model)
-car::Anova(virus.prev.model,type=3) #Same results as infection probability and virus prevalence (proportion infected)
+summary(virus.ct.model)
+car::Anova(virus.ct.model, type=3) #TABLE S3 (TOTAL HOSTS INFECTED)
+#Similar results as infection probability and virus prevalence (proportion infected)
 
-
-# #Post-hoct tests for effects of functional diversity on BYDV Prevalence (proportion infected)
-emm_FD <-emmeans(virus.prev.model, ~FunctionalDiversity, type="response")
-emm_FD
-multcomp::cld(emm_FD, Letters = LETTERS) #compact letter display for functional diversity treatments
-contrast(emm_FD, "trt.vs.ctrl", ref = "G")
-#Post-hoc tests indicate no difference between functional diversity treatments
 
 #############################################################################
 # Total infected with virus -- FG Richness Analyses 
 #############################################################################
 
-virus.prev.richness.model = glmmTMB(tot.infected ~GrassType * fg_richness + Year
-                                    + (1|Year:Block) + (1|Year:Block:Plot) + (1|Species),
+virus.ct.richness.model = glmmTMB(tot.infected ~GrassType * fg_richness + Year
+                                    + (1|Year:Block) + (1|Year:Block:Plot) +  (1|Year:Block:Plot:Species) + (1|Species),
+                                    family="poisson",
                                     data=tot.infected.df)
 
-summary(virus.prev.richness.model)
-car::Anova(virus.prev.richness.model, type=3) #Same results as infection probability and virus prevalence (proportion infected)
+summary(virus.ct.richness.model)
+car::Anova(virus.ct.richness.model, type=3) #TABLE S4 (TOTAL HOSTS INFECTED)
 
 
