@@ -80,7 +80,7 @@ levels(species.info0$Species)
 
 library(wesanderson)
 
-Figure1_bydv.species <-ggplot(species.info0,
+Figure2_bydv.species <-ggplot(species.info0,
                        aes(x=Species, y=prob)) +
   geom_point(aes(color=GrassType), size=5) +
   geom_errorbar(aes(ymin=prob-SE, ymax=prob+SE), width=.05, position=position_dodge(0.01)) +
@@ -107,8 +107,8 @@ Figure1_bydv.species <-ggplot(species.info0,
   annotate("text", x=0.65, y=0.49, label= '"(a)"',
            col="black", size=6, parse=TRUE)
 
-Figure1_bydv.species +scale_color_manual(guide = guide_legend(title = "Grass Type"), values=wes_palette(n=2, name="GrandBudapest1")) -> Fig1.panela
-Fig1.panela
+Figure2_bydv.species +scale_color_manual(guide = guide_legend(title = "Grass Type"), values=wes_palette(n=2, name="GrandBudapest1")) -> Fig2.panela
+Fig2.panela
 
 ###################################################
 #Virus infection probability Analyses - Table 2
