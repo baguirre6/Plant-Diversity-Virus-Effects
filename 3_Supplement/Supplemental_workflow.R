@@ -138,12 +138,12 @@ levels(species.biomass.info$Species)
 
 library(wesanderson)
 
-Figure1b_species_biomass <-ggplot(species.biomass.info,
+Figure2b_species_biomass <-ggplot(species.biomass.info,
                        aes(x=Species, y=response)) +
   geom_point(aes(color=GrassType), size=4) +
   geom_errorbar(aes(ymin=response-SE, ymax=response+SE), width=.05, position=position_dodge(0.01)) +
   xlab("Grass Species") +
-  ylab(bquote('Grass Species Productivity' ~ (g/m^-2))) +
+  ylab(bquote('Productivity' ~ (g/m^-2))) +
   ylim(40, 350) +
   theme_bw() +
   theme(axis.title   = element_text(size=16),
@@ -165,9 +165,20 @@ Figure1b_species_biomass <-ggplot(species.biomass.info,
   annotate("text", x=0.65, y=345, label= '"(b)"',
            col="black", size=6, parse=TRUE)
 
-Figure1b_species_biomass +scale_color_manual(guide = guide_legend(title = "Grass Type"), values=wes_palette(n=2, name="GrandBudapest1")) ->Fig1.panelB
-Fig1.panelB
+Figure2b_species_biomass +scale_color_manual(guide = guide_legend(title = "Grass Type"), values=wes_palette(n=2, name="GrandBudapest1")) ->Fig2.panelB
+Fig2.panelB
 
 #import species infection figure:
-source("virus_workflow.R")
+source("2_Analyses_and_Figures/virus_workflow.R")
+
+#####################################################################
+# Join panels to make final Figure 2 
+
+Figure2 <- ggarrange(Fig2.panela, Fig2.panelB,
+                          ncol = 2, nrow = 1,
+                          common.legend = TRUE, legend = "top")
+Figure2
+
+ggsave("4_Figures/Figure2.pdf", Figure2, 
+       width = 12, height = 5)
 
