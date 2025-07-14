@@ -102,3 +102,72 @@ sp.figure.1 +
   geom_smooth(data = subset(sp.grass.data, GrassType == "C3"  & Species == "Secale cereale"),
               color = "#00BFC4", method = "lm", se = TRUE)
 
+###################################################################################################
+########## Plot biomass by species: 
+emmeans(grass.spp.model, pairwise~Species, type="response")
+emm_sp_biomass <-emmeans(grass.spp.model, pairwise~Species, type="response")
+
+multcomp::cld(emm_sp_biomass, Letters = LETTERS) #compact letter display for figure 1
+
+#######################
+# BYDV infection probability X Species -- FIGURE 1
+species.biomass.info =as.data.frame(summary(emmeans(grass.spp.model, ~Species, type="response")))
+species.biomass.info
+
+#add grass type column
+species.biomass.info %>% 
+  mutate(GrassType =
+           case_when(
+             Species == 'Avena fatua' ~ 'C3',
+             Species == 'Lolium multiflorum' ~ 'C3',
+             Species == 'Secale cereale' ~ 'C3',
+             Species == 'Echinochloa crusgalli' ~ 'C4',
+             Species == 'Setaria italica' ~ 'C4',
+             Species == 'Panicum miliaceum' ~ 'C4'
+           )
+  ) -> species.biomass.info
+
+species.biomass.info$GrassType <- as.factor(species.biomass.info$GrassType)
+
+species.biomass.info %>% 
+  mutate(Species = fct_relevel(Species,
+                               "Avena fatua", "Lolium multiflorum", "Secale cereale", 
+                               "Echinochloa crusgalli", "Panicum miliaceum", "Setaria italica")) -> species.biomass.info
+
+levels(species.biomass.info$Species)
+
+library(wesanderson)
+
+Figure1b_species_biomass <-ggplot(species.biomass.info,
+                       aes(x=Species, y=response)) +
+  geom_point(aes(color=GrassType), size=4) +
+  geom_errorbar(aes(ymin=response-SE, ymax=response+SE), width=.05, position=position_dodge(0.01)) +
+  xlab("Grass Species") +
+  ylab(bquote('Grass Species Productivity' ~ (g/m^-2))) +
+  ylim(40, 350) +
+  theme_bw() +
+  theme(axis.title   = element_text(size=16),
+        axis.text.y    = element_text(size=13),
+        axis.text.x = element_text(face = "italic", size=13, angle = 45, hjust = 1),
+        legend.position = "top") +
+  annotate("text", x="Avena fatua", y=330, label= 'd',
+           col="black", size=6, parse=TRUE) +
+  annotate("text", x="Lolium multiflorum", y=115, label= 'a',
+           col="black", size=6, parse=TRUE) +
+  annotate("text", x="Secale cereale", y=130, label= 'ab',
+           col="black", size=6, parse=TRUE) +
+  annotate("text", x="Echinochloa crusgalli", y=175, label= 'bc',
+           col="black", size=6, parse=TRUE) +
+  annotate("text", x="Panicum miliaceum", y=150, label= 'b',
+           col="black", size=6, parse=TRUE) +
+  annotate("text", x="Setaria italica", y=250, label= 'cd',
+           col="black", size=6, parse=TRUE)  +
+  annotate("text", x=0.65, y=345, label= '"(b)"',
+           col="black", size=6, parse=TRUE)
+
+Figure1b_species_biomass +scale_color_manual(guide = guide_legend(title = "Grass Type"), values=wes_palette(n=2, name="GrandBudapest1")) ->Fig1.panelB
+Fig1.panelB
+
+#import species infection figure:
+source("virus_workflow.R")
+
