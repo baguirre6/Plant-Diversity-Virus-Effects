@@ -2,9 +2,6 @@
 #Author: Beatriz A. Aguirre
 
 ######################################
-#Clear environment
-rm(list= ls())
-
 library(lme4)
 library(lmerTest)
 library(emmeans)
