@@ -70,7 +70,6 @@ species_labels <- c(
   "C4" = "C4"
 )
 
-
 # Plot regressions of species biomass by infection
 ggplot(sp.grass.data, aes(x=mean.sp.infection, y=log(Adj_biomass), group=Species)) +
   geom_point() +
@@ -104,66 +103,51 @@ sp.figure.1 +
 
 ###################################################################################################
 ########## Plot biomass by species: 
-emmeans(grass.spp.model, pairwise~Species, type="response")
-emm_sp_biomass <-emmeans(grass.spp.model, pairwise~Species, type="response")
+emmeans(grass.spp.model, pairwise~Species)
+emm_sp_biomass <-emmeans(grass.spp.model, pairwise~Species)
 
 multcomp::cld(emm_sp_biomass, Letters = LETTERS) #compact letter display for figure 1
 
 #######################
-# BYDV infection probability X Species -- FIGURE 1
-species.biomass.info =as.data.frame(summary(emmeans(grass.spp.model, ~Species, type="response")))
-species.biomass.info
-
-#add grass type column
-species.biomass.info %>% 
-  mutate(GrassType =
-           case_when(
-             Species == 'Avena fatua' ~ 'C3',
-             Species == 'Lolium multiflorum' ~ 'C3',
-             Species == 'Secale cereale' ~ 'C3',
-             Species == 'Echinochloa crusgalli' ~ 'C4',
-             Species == 'Setaria italica' ~ 'C4',
-             Species == 'Panicum miliaceum' ~ 'C4'
-           )
-  ) -> species.biomass.info
-
-species.biomass.info$GrassType <- as.factor(species.biomass.info$GrassType)
-
-species.biomass.info %>% 
-  mutate(Species = fct_relevel(Species,
-                               "Avena fatua", "Lolium multiflorum", "Secale cereale", 
-                               "Echinochloa crusgalli", "Panicum miliaceum", "Setaria italica")) -> species.biomass.info
-
-levels(species.biomass.info$Species)
 
 library(wesanderson)
 
-Figure2b_species_biomass <-ggplot(species.biomass.info,
-                       aes(x=Species, y=response)) +
+calc_SE <- function(x) {
+  x2<-na.omit(x)
+  sd(x2)/sqrt(length(x2))
+}
+
+sp.grass.data %>% 
+  group_by(Species, GrassType) %>% 
+  mutate(Species = fct_relevel(Species,
+                               "Avena fatua", "Lolium multiflorum", "Secale cereale", 
+                               "Echinochloa crusgalli", "Panicum miliaceum", "Setaria italica")) %>% 
+  summarise(mean.prod = mean(log(Adj_biomass)), se.prod= calc_SE(log(Adj_biomass))) %>% 
+  ggplot(aes(x=Species, y=mean.prod)) +
   geom_point(aes(color=GrassType), size=4) +
-  geom_errorbar(aes(ymin=response-SE, ymax=response+SE), width=.05, position=position_dodge(0.01)) +
+  geom_errorbar(aes(ymin=mean.prod-se.prod, ymax=mean.prod+se.prod), width=.05, position=position_dodge(0.01)) +
   xlab("Grass Species") +
-  ylab(bquote('Productivity' ~ (g/m^-2))) +
-  ylim(40, 350) +
+  ylab(bquote('Log Productivity' ~ (g/m^-2))) + 
+  ylim(3.5, 6.0) +
   theme_bw() +
   theme(axis.title   = element_text(size=16),
-        axis.text.y    = element_text(size=13),
-        axis.text.x = element_text(face = "italic", size=13, angle = 45, hjust = 1),
-        legend.position = "top") +
-  annotate("text", x="Avena fatua", y=330, label= 'd',
+          axis.text.y    = element_text(size=13),
+          axis.text.x = element_text(face = "italic", size=13, angle = 45, hjust = 1),
+          legend.position = "top") +
+  annotate("text", x="Avena fatua", y=5.5, label= 'd',
            col="black", size=6, parse=TRUE) +
-  annotate("text", x="Lolium multiflorum", y=115, label= 'a',
+  annotate("text", x="Lolium multiflorum", y=4.2, label= 'a',
            col="black", size=6, parse=TRUE) +
-  annotate("text", x="Secale cereale", y=130, label= 'ab',
+  annotate("text", x="Secale cereale", y=4.8, label= 'ab',
            col="black", size=6, parse=TRUE) +
-  annotate("text", x="Echinochloa crusgalli", y=175, label= 'bc',
+  annotate("text", x="Echinochloa crusgalli", y=5.25, label= 'bc',
            col="black", size=6, parse=TRUE) +
-  annotate("text", x="Panicum miliaceum", y=150, label= 'b',
+  annotate("text", x="Panicum miliaceum", y=4.8, label= 'b',
            col="black", size=6, parse=TRUE) +
-  annotate("text", x="Setaria italica", y=250, label= 'cd',
+  annotate("text", x="Setaria italica", y=5.4, label= 'cd',
            col="black", size=6, parse=TRUE)  +
-  annotate("text", x=0.65, y=345, label= '"(b)"',
-           col="black", size=6, parse=TRUE)
+  annotate("text", x=0.65, y=5.9, label= '"(b)"',
+           col="black", size=6, parse=TRUE) -> Figure2b_species_biomass
 
 Figure2b_species_biomass +scale_color_manual(guide = guide_legend(title = "Grass Type"), values=wes_palette(n=2, name="GrandBudapest1")) ->Fig2.panelB
 Fig2.panelB
