@@ -103,8 +103,6 @@ Figure2_bydv.species <-ggplot(species.info0,
   annotate("text", x="Panicum miliaceum", y=.15, label= 'a',
            col="black", size=6, parse=TRUE) +
   annotate("text", x="Setaria italica", y=.23, label= 'b',
-           col="black", size=6, parse=TRUE) +
-  annotate("text", x=0.65, y=0.49, label= '"(a)"',
            col="black", size=6, parse=TRUE)
 
 Figure2_bydv.species +scale_color_manual(guide = guide_legend(title = "Grass Type"), values=wes_palette(n=2, name="GrandBudapest1")) -> Fig2.panela
