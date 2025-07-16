@@ -187,7 +187,7 @@ emtrends(grass.model, pairwise~GrassType, var = "mean.plot.infection", infer=TRU
 # FIGURE 4
 
 ggplot(grass.regression.df, aes(x=mean.plot.infection, y=log(tot.plot.adj))) +
-  geom_point() +
+  geom_point(color="#548B54", alpha=0.5) +
   xlab("BYDV-PAV Prevalence in Grasses") +
   ylab(bquote('Log Grass Productivity' ~ (g/m^-2))) +
   theme_bw() + 
@@ -199,7 +199,7 @@ ggplot(grass.regression.df, aes(x=mean.plot.infection, y=log(tot.plot.adj))) +
 # Add a regression line to only one specific facet panel, using subset() to filter data
 grass.regression.fig +
   geom_smooth(data = subset(grass.regression.df, GrassType == "C3"),
-              color = "#E69F00", method = "lm", se = TRUE) +
+              color = "#2E8B57", method = "lm", se = TRUE) +
   geom_text(data = data.frame(
     mean.plot.infection = c(0.59, 0.59, 0.59, 0.59, 0.59),
     tot.plot.adj = c(7.50, 7.30, 7.10, 7.30, 7.10),
@@ -207,11 +207,12 @@ grass.regression.fig +
     label = c("R^2==0.58", "~'t=3.578'", "~ 'P=0.0005***'","~'t= -1.174'", "~ 'P=0.245'")
   ),
   aes(x = mean.plot.infection, y = tot.plot.adj, label = label),
-  parse = TRUE) -> figure.5
+  parse = TRUE) -> figure.4
 
-figure.5
-#ggsave("~/Desktop/Dissertation/1_SBF/Manuscipt/2025_SubmissionMaterials/Analyses_March2025/Figures/Figure3_GrassProductivity.pdf", width = 6, height = 5)
+figure.4
 
+ggsave("4_Figures/Figure4.pdf", figure.4, 
+       width = 6, height = 5)
 
 #######################################################################################################
 #### TOTAL FORB AND LEGUME BIOMASS ANALYSES 
