@@ -25,6 +25,9 @@ seed.density.data2 %>%
 
 figure.S2
 
+ggsave("4_Figures/FigureS2.pdf", figure.S2, 
+       width = 6, height = 5)
+
 #####################################################################
 # Table S2 and Figure S3 (MODEL GRASS SPECIES BIOMASS DATA)
 #####################################################################
@@ -71,17 +74,23 @@ species_labels <- c(
 )
 
 # Plot regressions of species biomass by infection
-ggplot(sp.grass.data, aes(x=mean.sp.infection, y=log(Adj_biomass), group=Species)) +
-  geom_point() +
+sp.grass.data %>% 
+  mutate(Species = fct_relevel(Species,
+                               "Avena fatua", "Lolium multiflorum", "Secale cereale", 
+                               "Echinochloa crusgalli", "Panicum miliaceum", "Setaria italica")) %>% 
+  ggplot(aes(x=mean.sp.infection, y=log(Adj_biomass), group=Species)) +
+  geom_point(aes(color=GrassType), alpha=0.3) +
   xlab("BYDV-PAV Prevalence in Grasses") +
-  ylab(bquote('Log Grass Species Productivity' ~ (g/m^-2))) +
+  ylab(bquote('Log Productivity' ~ (g/m^-2))) +
   theme_bw() +
   theme(axis.title = element_text(size=16),
-        axis.text = element_text(size=13)) +
-  facet_wrap(GrassType~Species, labeller = as_labeller(species_labels, label_parsed))-> sp.figure.1
+        axis.text = element_text(size=13),
+        legend.position = "none") +
+  facet_wrap(~Species, labeller = as_labeller(species_labels, label_parsed))-> figure5c.base
 
+figure5c.base
 
-sp.figure.1 +
+figure5c.base +
   geom_text(data = data.frame(
     mean.sp.infection = c(0.75, 0.75, 0.75, 0.75, 0.75, 0.75),
     Adj_biomass = c(1500, 1500, 1500, 1500, 1500, 1500),
@@ -95,18 +104,20 @@ sp.figure.1 +
   aes(x = mean.sp.infection, y = log(Adj_biomass), label = label), 
   parse = TRUE) +
   geom_smooth(data = subset(sp.grass.data, GrassType == "C4"  & Species == "Echinochloa crusgalli"),
-              linetype = "dashed", color = "#00BFC4", method = "lm", se = TRUE) +
+              linetype = "dashed", color = "#FD6467", method = "lm", se = TRUE) +
   geom_smooth(data = subset(sp.grass.data, GrassType == "C4" & Species == "Panicum miliaceum"), 
-              color = "#00BFC4", method = "lm", se = TRUE) +
+              color = "#FD6467", method = "lm", se = TRUE) +
   geom_smooth(data = subset(sp.grass.data, GrassType == "C3"  & Species == "Secale cereale"),
-              color = "#00BFC4", method = "lm", se = TRUE)
+              color = "#FFB90F", method = "lm", se = TRUE) +
+              scale_color_manual(guide = guide_legend(title = "Grass Type"), values=wes_palette(n=2, name="GrandBudapest1")) ->figure5c 
+figure5c
 
 ###################################################################################################
-########## Plot biomass by species: 
+########## Plot biomass by species (Figure 5b): 
 emmeans(grass.spp.model, pairwise~Species)
 emm_sp_biomass <-emmeans(grass.spp.model, pairwise~Species)
 
-multcomp::cld(emm_sp_biomass, Letters = LETTERS) #compact letter display for figure 1
+multcomp::cld(emm_sp_biomass, Letters = LETTERS) #compact letter display for figure 5b
 
 #######################
 
@@ -145,24 +156,29 @@ sp.grass.data %>%
   annotate("text", x="Panicum miliaceum", y=4.8, label= 'b',
            col="black", size=6, parse=TRUE) +
   annotate("text", x="Setaria italica", y=5.4, label= 'cd',
-           col="black", size=6, parse=TRUE)  +
-  annotate("text", x=0.65, y=5.9, label= '"(b)"',
-           col="black", size=6, parse=TRUE) -> Figure2b_species_biomass
+           col="black", size=6, parse=TRUE) -> Figure5b_base
 
-Figure2b_species_biomass +scale_color_manual(guide = guide_legend(title = "Grass Type"), values=wes_palette(n=2, name="GrandBudapest1")) ->Fig2.panelB
-Fig2.panelB
+Figure5b_base +
+  scale_color_manual(guide = guide_legend(title = "Grass Type"), values=wes_palette(n=2, name="GrandBudapest1")) -> figure5b
+
+figure5b
 
 #import species infection figure:
 source("2_Analyses_and_Figures/virus_workflow.R")
 
 #####################################################################
-# Join panels to make final Figure 2 
+# Join panels to make final Figure 5 
+Figure5 <- ggarrange(
+  ggarrange(Fig2.panela, figure5b, 
+            ncol = 2, labels = c("(a)", "(b)"), 
+            font.label = list(size = 16), 
+            common.legend = TRUE, legend = "top"),
+  figure5c,
+  ncol = 1, heights = c(1, 1),
+  labels = c("", "(c)"),
+  font.label = list(size = 16))
 
-Figure2 <- ggarrange(Fig2.panela, Fig2.panelB,
-                          ncol = 2, nrow = 1,
-                          common.legend = TRUE, legend = "top")
-Figure2
+Figure5
 
-ggsave("4_Figures/Figure2.pdf", Figure2, 
-       width = 12, height = 5)
-
+ggsave("4_Figures/Figure5.pdf", Figure5, 
+       width = 12, height = 12)
