@@ -266,4 +266,7 @@ BYDV_figure2 <- ggarrange(panel.1, panel.2, panel.3, panel.4,
                           common.legend = TRUE, legend = "top")
 BYDV_figure2
 
+ggsave("4_Figures/Figure2.pdf", BYDV_figure2, 
+       width = 12, height = 12)
+
 #####################################################################
