@@ -139,10 +139,9 @@ r.squaredGLMM(community.model) # Community Productivity Marginal R2 provided in 
 emtrends(community.model, ~ FuncDiversity * GrassType, var = "mean.plot.infection", infer=TRUE)
 
 
-# FIGURE 4
-
+# FIGURE 3
 ggplot(comm.regression.df, aes(x=mean.plot.infection, y=log(total_plot_biomass))) +
-  geom_point() +
+  geom_point(color="#548B54", alpha=0.5) +
   xlab("BYDV-PAV Prevalence in Grasses") +
   ylab(bquote('Log Community Productivity' ~ (g/m^-2))) +
   theme_bw() + 
@@ -156,9 +155,9 @@ comm.regression.fig
 # Add a regression line to only one specific facet panel, using subset() to filter data
 comm.regression.fig +
   geom_smooth(data = subset(comm.regression.df, GrassType == "C3" & FuncDiversity == "G"),
-              color = "#E69F00", method = "lm", se = TRUE) +
+              color = "#2E8B57", method = "lm", se = TRUE) +
   geom_smooth(data = subset(comm.regression.df, GrassType == "C3" & FuncDiversity == "GL"),
-              linetype = "dashed", color = "#E69F00", method = "lm", se = TRUE) +
+              linetype = "dashed", color = "#2E8B57", method = "lm", se = TRUE) +
   geom_text(data = data.frame(
     mean.plot.infection = c(0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.5, 0.5,
                             0.50, 0.50, 0.50, 0.50, 0.50, 0.50, 0.5, 0.5),
@@ -172,10 +171,12 @@ comm.regression.fig +
               "~'t= -0.319'", "~ 'P=0.75'", "'t= -1.081'", "~'P=0.28'", "t== 0.246", "~'P=0.81'","t== -0.356", "~'P=0.72'")
   ),
   aes(x = mean.plot.infection, y = total_plot_biomass, label = label),
-  parse = TRUE) -> figure.4
+  parse = TRUE) -> figure.3
 
-figure.4
-#ggsave("~/Desktop/Dissertation/1_SBF/Manuscipt/2025_SubmissionMaterials/Analyses_March2025/Figures/Figure3_CommProductivity.pdf", width = 7, height = 5)
+figure.3
+
+ggsave("4_Figures/Figure3.pdf", figure.3, 
+       width = 8, height = 5)
 
 #######################################################################################################
 #### VISUALIZE GRASS BIOMASS DATA -- FIGURE 3
@@ -303,25 +304,27 @@ abline(h = 0, col = "red")
 # legume.model.sq.trans is a good model. 
 r.squaredGLMM(legume.model.sq.trans) # TABLE 3
 
-emmeans(legume.model.sq.trans, pairwise~ FuncDiversity, type="response") #significant
-
-
 #####################################################################
 # VISUALIZE LEGUME PRODUCTIVITY 
 #####################################################################
-# legume.emm =as.data.frame(summary(emmeans(legume.model.sq.trans, ~FuncDiversity, type="response")))
-# legume.emm
-# 
-# legume.figure<-ggplot(legume.emm,
-#                 aes(x=FuncDiversity, y=emmean), size=3) +
-#   geom_point(size=5) +
-#   geom_errorbar(aes(ymin=emmean-SE, ymax=emmean+SE), width=.05, position=position_dodge(0.01)) +
-#   ylab("Net Legume Productivity") +
-#   xlab("Functional Diversity") +
-#   theme_bw() +
-#   theme(axis.title   = element_text(face = "bold", size=15),
-#         axis.text    = element_text(face = "bold", size=13))
-# 
-# legume.figure
+legume.emm =as.data.frame(summary(emmeans(legume.model.sq.trans, ~FuncDiversity, type="response")))
+legume.emm
 
+legume.figure<-ggplot(legume.emm,
+                aes(x=FuncDiversity, y=emmean), size=3) +
+  geom_point(size=5) +
+  geom_errorbar(aes(ymin=emmean-SE, ymax=emmean+SE), width=.05, position=position_dodge(0.01)) +
+  ylab(bquote('Net Legume Productivity' ~ (g/m^-2))) +
+  xlab("Functional Diversity") +
+  theme_bw() +
+  theme(axis.title= element_text(size=16),
+        axis.text= element_text(size=13)) +
+  geom_signif(comparisons = list(c("GL", "GLF")), annotations = "*", map_signif_level=TRUE,
+              textsize=10, y_position = 10, tip_length = 0.05, vjust=0.4) +
+  annotate("text", x=1.5, y=11, label= "'P=0.02'",
+           col="black", size=4, parse=TRUE)
 
+legume.figure
+
+ggsave("4_Figures/FigureS3.pdf", legume.figure, 
+       width = 6, height = 5)
