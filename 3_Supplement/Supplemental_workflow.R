@@ -3,6 +3,9 @@
 
 rm(list = ls())
 
+library(dplyr)
+library(ggplot2)
+
 #####################################################################
 # Figure S2 -Seed density by FG Richness
 #####################################################################
@@ -182,3 +185,30 @@ Figure5
 
 ggsave("4_Figures/Figure5.pdf", Figure5, 
        width = 12, height = 12)
+
+#####################################################################
+# Plot regressions of species biomass by infection
+sp.grass.data %>% 
+  group_by(Species, GrassType, planted_fg_richness) %>% 
+  mutate(Species = fct_relevel(Species,
+                               "Avena fatua", "Lolium multiflorum", "Secale cereale", 
+                               "Echinochloa crusgalli", "Panicum miliaceum", "Setaria italica")) %>% 
+  summarise(mean.prod = mean(log(Adj_biomass)), se.prod= calc_SE(log(Adj_biomass))) %>% 
+  ggplot(aes(x=as.factor(planted_fg_richness), y=mean.prod, group=Species)) +
+  geom_point(aes(color=GrassType)) +
+  geom_errorbar(aes(ymin=mean.prod-se.prod, ymax=mean.prod+se.prod, color=GrassType), width=.05, position=position_dodge(0.01)) +
+  xlab("Functional Group Richness") +
+  ylab(bquote('Log Productivity' ~ (g/m^-2))) +
+  theme_bw() +
+  theme(axis.title = element_text(size=16),
+        axis.text = element_text(size=13),
+        legend.position = "top") +
+  facet_wrap(~Species, labeller = as_labeller(species_labels, label_parsed))-> figure.S4
+
+figure.S4 +
+  scale_color_manual(guide = guide_legend(title = "Grass Type"), values=wes_palette(n=2, name="GrandBudapest1")) -> figure.S4
+
+figure.S4
+
+ggsave("4_Figures/FigureS4.pdf", figure.S4, 
+       width = 6, height = 5)
