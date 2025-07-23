@@ -330,3 +330,11 @@ legume.figure
 
 # ggsave("4_Figures/FigureS3.pdf", legume.figure, 
 #        width = 6, height = 5)
+
+###################################################################################
+# Supplemental analyses to check if biomass is positively correlated with infection: 
+
+grass.model.sup <- lmer(mean.plot.infection ~ log(tot.plot.adj) * GrassType * FuncDiversity + Year + 
+                      (1|Year:Block), data= grass.regression.df)
+
+anova(grass.model.sup, type=3) 
