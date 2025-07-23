@@ -175,8 +175,8 @@ comm.regression.fig +
 
 figure.3
 
-ggsave("4_Figures/Figure3.pdf", figure.3, 
-       width = 8, height = 5)
+# ggsave("4_Figures/Figure3.pdf", figure.3, 
+#        width = 8, height = 5)
 
 #######################################################################################################
 #### VISUALIZE GRASS BIOMASS DATA -- FIGURE 3
@@ -212,8 +212,8 @@ grass.regression.fig +
 
 figure.4
 
-ggsave("4_Figures/Figure4.pdf", figure.4, 
-       width = 6, height = 5)
+# ggsave("4_Figures/Figure4.pdf", figure.4, 
+#        width = 6, height = 5)
 
 #######################################################################################################
 #### TOTAL FORB AND LEGUME BIOMASS ANALYSES 
@@ -310,6 +310,8 @@ r.squaredGLMM(legume.model.sq.trans) # TABLE 3
 legume.emm =as.data.frame(summary(emmeans(legume.model.sq.trans, ~FuncDiversity, type="response")))
 legume.emm
 
+library(ggsignif)
+
 legume.figure<-ggplot(legume.emm,
                 aes(x=FuncDiversity, y=emmean), size=3) +
   geom_point(size=5) +
@@ -326,5 +328,5 @@ legume.figure<-ggplot(legume.emm,
 
 legume.figure
 
-ggsave("4_Figures/FigureS3.pdf", legume.figure, 
-       width = 6, height = 5)
+# ggsave("4_Figures/FigureS3.pdf", legume.figure, 
+#        width = 6, height = 5)
