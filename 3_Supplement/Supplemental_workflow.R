@@ -28,8 +28,8 @@ seed.density.data2 %>%
 
 figure.S2
 
-ggsave("4_Figures/FigureS2.pdf", figure.S2, 
-       width = 6, height = 5)
+# ggsave("4_Figures/FigureS2.pdf", figure.S2, 
+#        width = 6, height = 5)
 
 #####################################################################
 # Table S2 and Figure S3 (MODEL GRASS SPECIES BIOMASS DATA)
@@ -183,8 +183,8 @@ Figure5 <- ggarrange(
 
 Figure5
 
-ggsave("4_Figures/Figure5.pdf", Figure5, 
-       width = 12, height = 12)
+# ggsave("4_Figures/Figure5.pdf", Figure5, 
+#        width = 12, height = 12)
 
 #####################################################################
 # Plot regressions of species biomass by infection
@@ -210,5 +210,5 @@ figure.S4 +
 
 figure.S4
 
-ggsave("4_Figures/FigureS4.pdf", figure.S4, 
-       width = 6, height = 5)
+# ggsave("4_Figures/FigureS4.pdf", figure.S4, 
+#        width = 6, height = 5)
