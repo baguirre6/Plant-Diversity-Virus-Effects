@@ -76,6 +76,8 @@ species_labels <- c(
   "C4" = "C4"
 )
 
+library(wesanderson)
+
 # Plot regressions of species biomass by infection
 sp.grass.data %>% 
   mutate(Species = fct_relevel(Species,
@@ -123,8 +125,6 @@ emm_sp_biomass <-emmeans(grass.spp.model, pairwise~Species)
 multcomp::cld(emm_sp_biomass, Letters = LETTERS) #compact letter display for figure 5b
 
 #######################
-
-library(wesanderson)
 
 calc_SE <- function(x) {
   x2<-na.omit(x)
@@ -187,7 +187,7 @@ Figure5
 #        width = 12, height = 12)
 
 #####################################################################
-# Plot regressions of species biomass by infection
+# Plot species biomass by infection
 sp.grass.data %>% 
   group_by(Species, GrassType, planted_fg_richness) %>% 
   mutate(Species = fct_relevel(Species,
@@ -212,3 +212,39 @@ figure.S4
 
 # ggsave("4_Figures/FigureS4.pdf", figure.S4, 
 #        width = 6, height = 5)
+
+#####################################################################
+# Supplemental analyses to check if biomass is positively 
+# correlated with infection: 
+#####################################################################
+grass.model.sup <- lmer(mean.plot.infection ~ log(tot.plot.adj) * GrassType * FuncDiversity + Year + 
+                          (1|Year:Block), data= grass.regression.df)
+
+anova(grass.model.sup, type=3) 
+
+#####################################################################
+# Biomass by Richness Analyses (TABLE S5)
+#####################################################################
+#Table S5 -- Net Community Productivity
+community.model.richness <- lmer(log(total_plot_biomass) ~  mean.plot.infection * GrassType * planted_fg_richness  + Year + 
+                          (1|Year:Block), data= comm.regression.df)
+summary(community.model.richness)
+anova(community.model.richness, type=3) #Table S5 
+
+r.squaredGLMM(community.model.richness) # Community Productivity Marginal R2 provided in Table S5
+
+#Post-hoc tests for significant 3-way interaction (mean.plot infection x Functional group diversity x Grass Type):
+emtrends(community.model.richness, ~ planted_fg_richness | GrassType, var = "mean.plot.infection", infer=TRUE)
+
+##############
+#Table S5 -- Net Grass Productivity
+grass.model.richness <- lmer(log(tot.plot.adj) ~  mean.plot.infection * GrassType * planted_fg_richness + Year + 
+                      (1|Year:Block), data= grass.regression.df)
+
+summary(grass.model.richness)
+anova(grass.model.richness, type=3) #Table S5 
+
+r.squaredGLMM(grass.model.richness) # Grass Productivity Marginal R2 provided in Table 3
+
+#Post-hoc tests for significant effect of Grass Type):
+emmeans(grass.model.richness, ~GrassType)
