@@ -85,7 +85,7 @@ sp.grass.data %>%
                                "Echinochloa crusgalli", "Panicum miliaceum", "Setaria italica")) %>% 
   ggplot(aes(x=mean.sp.infection, y=log(Adj_biomass), group=Species)) +
   geom_point(aes(color=GrassType), alpha=0.3) +
-  xlab("BYDV-PAV Prevalence in Grasses") +
+  xlab("BYDV-PAV Prevalence") +
   ylab(bquote('Log Productivity' ~ (g/m^-2))) +
   theme_bw() +
   theme(axis.title = element_text(size=16),
@@ -183,7 +183,7 @@ Figure5 <- ggarrange(
 
 Figure5
 
-# ggsave("4_Figures/Figure5.pdf", Figure5, 
+# ggsave("4_Figures/Figure5.pdf", Figure5,
 #        width = 12, height = 12)
 
 #####################################################################
