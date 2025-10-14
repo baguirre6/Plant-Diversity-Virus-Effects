@@ -50,3 +50,24 @@ grass.regression.fig2 +
   parse = TRUE) -> supp.fig_no_SC
 
 supp.fig_no_SC
+
+##############################################################
+# Is the positive correlation between C3 grass productivity and community-level BYDV prevalence 
+#driven by A. fatua?
+
+#Calculate mean grass biomass for each plot:
+sp.grass.data %>% 
+  filter(!Species == "Avena fatua") %>%  #exclude A. fatua
+  group_by(Year, Block, Plot, FuncDiversity, planted_fg_richness, GrassType)%>% 
+  summarise(tot.plot.adj = sum(Adj_biomass),
+            mean.plot.infection = mean(mean.sp.infection, na.rm=TRUE)) -> plot.total.grass.biomass.no.af
+
+
+grass.model.no.af <- lmer(log(tot.plot.adj) ~  mean.plot.infection * GrassType * FuncDiversity + Year + 
+                            (1|Year:Block), data= plot.total.grass.biomass.no.af)
+
+summary(grass.model.no.af)
+anova(grass.model.no.af, type=3) 
+
+#Post-hoc test for mean.plot infection x Grass Type interaction WITHOUT AVENA FATUA
+emtrends(grass.model.no.af, pairwise~GrassType, var = "mean.plot.infection", infer=TRUE)
