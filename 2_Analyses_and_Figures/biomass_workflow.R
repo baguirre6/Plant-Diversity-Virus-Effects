@@ -1,9 +1,6 @@
 #Biomass Analyses
 #Beatriz A. Aguirre
 
-#Clear environment
-rm(list= ls())
-
 #Load required libraries
 library(tidyverse)
 library(lsmeans)
