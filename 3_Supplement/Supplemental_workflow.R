@@ -220,7 +220,7 @@ figure.S4
 grass.model.sup <- lmer(mean.plot.infection ~ log(tot.plot.adj) * GrassType * FuncDiversity + Year + 
                           (1|Year:Block), data= grass.regression.df)
 
-anova(grass.model.sup, type=3) 
+anova(grass.model.sup, type=3) #TABLE S7
 
 #####################################################################
 # Biomass by Richness Analyses (TABLE S5)
