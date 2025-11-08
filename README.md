@@ -21,7 +21,7 @@ Authors:
 
 
 <h2>Repository Purpose</h2>
-This repository contains the necessary code for analyses and figures of the study described above. 
+This repository contains the necessary code for the analyses and figures of this study.
 
 <h2>Repository Structure and File Summary</h2>
 
