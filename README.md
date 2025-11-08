@@ -17,7 +17,7 @@ Authors:
    
 4.	In this study, virus infection was not mitigated or amplified by increasing functional group richness or altered functional group composition, nor did virus infection vary between C<sub>3</sub> and C<sub>4</sub> grasses. However, we found a positive correlation between community-level virus prevalence and C<sub>3</sub> grass productivity (but not C<sub>4</sub> productivity). 
 
-5.	Synthesis. Our findings indicated that plant virus infection in grasses was not diluted by plant functional group diversity. However, we found a positive relationship between community-level virus prevalence and C<sub>3</sub> grass productivity. Together, these findings suggest that while plant diversity did not reduce the infection levels of a cryptic plant virus, mutualistic plant-virus interactions may contribute to enhanced ecosystem functioning via increased productivity.
+5.	*Synthesis*. Our findings indicated that plant virus infection in grasses was not diluted by plant functional group diversity. However, we found a positive relationship between community-level virus prevalence and C<sub>3</sub> grass productivity. Together, these findings suggest that while plant diversity did not reduce the infection levels of a cryptic plant virus, mutualistic plant-virus interactions may contribute to enhanced ecosystem functioning via increased productivity.
 
 
 <h2>Repository Purpose</h2>
