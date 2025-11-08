@@ -1,4 +1,4 @@
-<h1>Plant functional diversity does not dilute virus infection, but community virus prevalence positively correlates with net C<sub>3</sub> grass productivity</h1>
+<h1>Plant functional diversity does not dilute virus infection, but community virus prevalence positively correlates with net C<sub>3</sub> grass production</h1>
 
 Authors: 
   
