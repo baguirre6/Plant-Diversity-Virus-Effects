@@ -38,3 +38,5 @@ vignettes/*.pdf
 # R Environment Variables
 .Renviron
 
+# Ignore .DS_Store files for Apple
+.DS_Store
