@@ -21,7 +21,8 @@ Authors:
 
 
 <h2>Repository Purpose</h2>
-This repository contains the necessary code for the analyses and figures of this study.
+This repository contains the necessary code for the analyses and figures of this study. 
+Data will be available on DryAd Digital Repository: https://doi.org/10.5061/dryad.905qftv04
 
 <h2>Repository Structure and File Summary</h2>
 
