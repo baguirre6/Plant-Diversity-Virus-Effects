@@ -1,4 +1,4 @@
-<h1>Increased virus prevalence promotes C<sub>3</sub> grass productivity and is not diluted by plant community diversity</h1>
+<h1>Plant functional diversity does not dilute virus infection, but community virus prevalence positively correlates with net C<sub>3</sub> grass production</h1>
 
 Authors: 
   
@@ -9,16 +9,20 @@ Authors:
 
 <h2>Associated Paper Abstract</h2>
 
-1.	Plant diversity in wild and agricultural plant communities has been shown to protect plant communities from pathogens, and the effects of many aspects of diversity (species richness, evenness, and their combination) on virus epidemiology have been examined. Increasing species or genetic diversity of one species can influence the prevalence of a widespread and economically important generalist grass virus, barley yellow dwarf virus (BYDV-PAV). However, virus prevalence may differ among distinct grass functional types (C<sub>3</sub> vs. C<sub>4</sub>) due to differences between their temporal seasonal activity, palatability to aphid vectors, and plant physiology. Plant functional group (e.g., grasses, legumes, and non-leguminous forbs) diversity is known to reduce plant diseases in unmanaged and agricultural plant communities, yet their potential interactions and effects on plant virus disease prevalence has not been examined. 
+1.	Plant diversity in wild and agricultural plant communities has been shown to protect plant communities from pathogens, and the effects of many aspects of diversity (genetic diversity, species richness, evenness, and their combination) on plant pathogen epidemiology have been examined. Diversity among plant functional groups (e.g., grasses, legumes, and non-leguminous forbs) is known to reduce plant diseases in natural and agricultural plant communities. However, potential interactions among plant functional groups and their effects on plant virus infection dynamics have not been examined.
 
-2.	Here, we evaluated the effect of grass functional type (three C<sub>3</sub> and three C<sub>4</sub> species), along with plant functional group richness, and composition, on virus prevalence in experimental annual plant communities that were inoculated with aphids carrying BYDV-PAV. We also assessed the relationships between virus prevalence and the productivity of the total community (grasses + forbs+ legumes), as well as the component plant functional types.
+2.	 Insect-vectored plant virus infection dynamics may differ among distinct plant host functional types (C<sub>3</sub> vs. C<sub>4</sub>) due to differences in their palatability to aphid vectors, and plant physiological responses to environmental factors.
 
-3.	In these experiments, BYDV-PAV prevalence did not vary between C<sub>3</sub> and C<sub>4</sub> grasses and neither functional group richness nor functional group composition mitigated or amplified virus prevalence in grass hosts. However, we found a strong positive correlation between virus prevalence and C<sub>3</sub> grass productivity (but not C<sub>4</sub> productivity).
+3.	Here, we evaluated the role of plant functional group diversity (richness and composition), and host functional type (three C<sub>3</sub> and three C<sub>4</sub> species), on plant virus infection in experimental annual plant communities that were inoculated with aphids carrying *barley yellow dwarf virus* (BYDV), a widespread and economically important generalist grass virus. We also assessed the relationships between community-level virus prevalence and the productivity of the total community (grasses + forbs+ legumes), as well as the component plant functional types.
+   
+4.	In this study, virus infection was not mitigated or amplified by increasing functional group richness or altered functional group composition, nor did virus infection vary between C<sub>3</sub> and C<sub>4</sub> grasses. However, we found a positive correlation between community-level virus prevalence and C<sub>3</sub> grass productivity (but not C<sub>4</sub> productivity). 
 
-4.	Synthesis. Our findings indicate that virus prevalence in grasses was not diluted by increased plant functional group richness or altered plant functional group composition. However, we found that virus prevalence positively influenced C<sub>3</sub> grass productivity. Together, these findings help us understand that while plant diversity did not reduce cryptic virus prevalence, mutualistic plant-virus interactions can contribute to enhanced ecosystem functioning via increased productivity.
+5.	*Synthesis*. Our findings indicated that plant virus infection in grasses was not diluted by plant functional group diversity. However, we found a positive relationship between community-level virus prevalence and C<sub>3</sub> grass productivity. Together, these findings suggest that while plant diversity did not reduce the infection levels of a cryptic plant virus, mutualistic plant-virus interactions may contribute to enhanced ecosystem functioning via increased productivity.
+
 
 <h2>Repository Purpose</h2>
-This repository contains the data and code necessary for study described above. 
+This repository contains the necessary code for the analyses and figures of this study. 
+Data will be available on DryAd Digital Repository: https://doi.org/10.5061/dryad.905qftv04
 
 <h2>Repository Structure and File Summary</h2>
 
