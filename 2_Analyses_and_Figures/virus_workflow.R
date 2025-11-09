@@ -12,14 +12,29 @@ library(glmmTMB)
 library(ggpubr)
 library(forcats)
 library(glmmTMB)
+library(googledrive)
 
 ##########################################################################################
 #Import BYDV infection data 
 ##########################################################################################
 
-virus.data <- read.csv("1_Data/virus.data.csv", stringsAsFactors =
-                      TRUE, strip.white = TRUE, na.strings =
-                      c("NA", ""))
+#drive authentication
+drive_auth()
+
+#create data folder
+dir.create(file.path("data"), showWarnings = F)
+
+#identify desired file
+focal_file <- "virus.data.csv"
+
+#download data file
+googledrive::drive_ls(googledrive::as_id("https://drive.google.com/drive/u/0/folders/1dpjkQh9MKMO8LInw4A1IaRXhddenbFzq")) %>% 
+  dplyr::filter(name == focal_file) %>% 
+  googledrive::drive_download(file = .$id, overwrite = T,
+                              path = file.path("data", .$name))
+
+# Read in infection data
+virus.data <- read.csv(file = file.path("data", "virus.data.csv"))
 
 #fix data structure
 virus.data$Year<-as.factor(virus.data$Year)
