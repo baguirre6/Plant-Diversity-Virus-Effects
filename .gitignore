@@ -40,3 +40,6 @@ vignettes/*.pdf
 
 # Ignore .DS_Store files for Apple
 .DS_Store
+
+# Ignore .csv files
+.csv
