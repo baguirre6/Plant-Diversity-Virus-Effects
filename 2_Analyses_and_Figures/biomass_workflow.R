@@ -9,17 +9,30 @@ library(lme4)
 library(MuMIn)
 library(dplyr)
 library(lmerTest)
+library(googledrive)
 
 ##########################################################################################
 # Import Biomass Data
 ##########################################################################################
 
-# #Set working directory and import final biomass data with both years
-# setwd("~/Desktop/Dissertation/1_SBF/Manuscipt/Final_SBF_Data")
+#drive authentication
+drive_auth()
 
-biomass.data <- read.csv("1_Data/biomass.data.csv", stringsAsFactors =
-                           TRUE, strip.white = TRUE, na.strings =
-                           c("NA", ""))
+#create data folder
+dir.create(file.path("data"), showWarnings = F)
+
+#identify desired file
+focal_file <- "biomass.data.csv"
+
+#download data file
+googledrive::drive_ls(googledrive::as_id("https://drive.google.com/drive/u/0/folders/1dpjkQh9MKMO8LInw4A1IaRXhddenbFzq")) %>% 
+  dplyr::filter(name == focal_file) %>% 
+  googledrive::drive_download(file = .$id, overwrite = T,
+                              path = file.path("data", .$name))
+
+# Read in infection data
+biomass.data <- read.csv(file = file.path("data", "biomass.data.csv"))
+
 #Check data structure:
 biomass.data$Year=as.factor(biomass.data$Year)
 
