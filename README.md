@@ -7,6 +7,8 @@ Authors:
   * Alexandra J. Wright,Department of Evolution and Behavior, University of Minnesota
   * Alison G. Power, Department of Ecology and Evolution, Cornell University
 
+[![DOI](https://zenodo.org/badge/566492863.svg)](https://doi.org/10.5281/zenodo.17561785)
+
 <h2>Associated Paper Abstract</h2>
 
 1.	Plant diversity in wild and agricultural plant communities has been shown to protect plant communities from pathogens, and the effects of many aspects of diversity (genetic diversity, species richness, evenness, and their combination) on plant pathogen epidemiology have been examined. Diversity among plant functional groups (e.g., grasses, legumes, and non-leguminous forbs) is known to reduce plant diseases in natural and agricultural plant communities. However, potential interactions among plant functional groups and their effects on plant virus infection dynamics have not been examined.
