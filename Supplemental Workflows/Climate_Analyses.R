@@ -328,4 +328,4 @@ final.delta.normal.figure
 manuscript.figure.S1 <- ggarrange(final.delta.normal.figure, panel.1, panel.2, panel.3,
                                   ncol = 2, nrow = 2)
 manuscript.figure.S1
-# ggsave("4_Figures/FigureS1.pdf", figure.S1, width = 12, height = 12)
+#ggsave("Figure PDFs/FigureS1.pdf", manuscript.figure.S1, width = 12, height = 12)
