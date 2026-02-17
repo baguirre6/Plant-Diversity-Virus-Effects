@@ -266,7 +266,7 @@ panel.4 <-ggplot(panel_fd,
         legend.position = "none") +
   annotate("text", x=0.65, y=.50, label= '"(d)"',
            col="black", size=6, parse=TRUE) +
-  geom_signif(comparisons = list(c("G", "GLF")), annotations = "", map_signif_level=TRUE,
+  geom_signif(comparisons = list(c("G", "GLF")), annotations = "*", map_signif_level=TRUE,
               textsize=10, y_position = 0.40, tip_length = 0.05, vjust=0.4) +
   annotate("text", x=2.5, y=0.48, label= "'P=0.04'",
            col="black", size=4, parse=TRUE)
@@ -281,7 +281,7 @@ BYDV_figure2 <- ggarrange(panel.1, panel.2, panel.3, panel.4,
                           common.legend = TRUE, legend = "top")
 BYDV_figure2
 
-# ggsave("4_Figures/Figure2.pdf", BYDV_figure2, 
+# ggsave("Figure PDFs/Figure2.pdf", BYDV_figure2,
 #        width = 12, height = 12)
 
 #####################################################################
